@@ -18,6 +18,7 @@
 #define MAX_INPUT_SIZE 1024
 
 /* Function Prototypes */
+int _shell(void);
 char *custom_getline(void);
 void execute_command(char *cmd);
 char *read_input(void);
