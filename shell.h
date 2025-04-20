@@ -22,7 +22,7 @@ int _shell(void);
 char *custom_getline(void);
 void execute_command(char *cmd);
 char *read_input(void);
-void _strdup(char *str);
+char *_strdup(const char *str);
 size_t _strlen(const char *s);
 
 #endif /* SHELL_H */
