@@ -1,11 +1,27 @@
 #ifndef SHELL_H
 #define SHELL_H
 
+/*
+ * File: shell.h
+ * Description: Header file for the simple shell project.
+ * Contains function prototypes and included libraries.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/wait.h>
 #include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
 
-char *get_line(void);
+#define MAX_INPUT_SIZE 1024
 
-#endif
+/* Function Prototypes */
+char *custom_getline(void);
+void execute_command(char *cmd);
+char *read_input(void);
+void _strdup(char *str);
+size_t _strlen(const char *s);
+
+#endif /* SHELL_H */
