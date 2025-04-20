@@ -8,6 +8,8 @@
  *
  * Return: 0 on success, or exit status on failure
  */
+extern char **environ;
+
 int _shell(void)
 {
 	char *line = NULL;
