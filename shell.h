@@ -18,11 +18,8 @@
 #define MAX_INPUT_SIZE 1024
 
 /* Function Prototypes */
+extern char **environ;
 int _shell(void);
-char *custom_getline(void);
-void execute_command(char *cmd);
-char *read_input(void);
 char *_strdup(const char *str);
-size_t _strlen(const char *s);
 
 #endif /* SHELL_H */
