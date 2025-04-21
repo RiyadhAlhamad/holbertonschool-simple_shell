@@ -1,22 +1,39 @@
 #include "shell.h"
 
 /**
- * custom_getline - get_line.c
- * Description: Contains a custom implementation of the getline function.
- * Return: line
+ * custom_getline - Custom implementation of getline function
+ * @lineptr: Pointer to the line buffer
+ * @n: Pointer to the size of the buffer
+ * @stream: Input stream (e.g., stdin)
+ *
+ * Return: Number of characters read, or -1 on failure
  */
 
-char *custom_getline(void)
+ssize_t custom_getline(char **lineptr, size_t *n, FILE *stream)
 {
-	ssize_t read;
-	size_t len = 0;
-	char *line = NULL;
+	ssize_t nchars;
+	size_t bufsize = 0;
+	char *buffer;
 
-	read = getline(&line, &len, stdin);
-	if (read == -1)
+	if (lineptr == NULL || n == NULL)
+		return (-1);
+
+	buffer = malloc(1024);
+	if (buffer == NULL)
+		return (-1);
+
+	nchars = read(fileno(stream), buffer, 1024);
+	if (nchars > 0)
 	{
-		free(line);
-		return (NULL);
+		buffer[nchars] = '\0';
+		*lineptr = buffer;
+		*n = 1024;
 	}
-	return (line);
+	else
+	{
+		free(buffer);
+		return (-1);
+	}
+
+	return (nchars);
 }
