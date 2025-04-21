@@ -12,7 +12,6 @@
  * Function declarations for the simple shell
  */
 
-ssize_t custom_getline(char **lineptr, size_t *n, FILE *stream);
 void execute_command(char *cmd, char *program_name);
 
 #endif /* SHELL_H */
