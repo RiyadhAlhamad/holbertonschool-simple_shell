@@ -1,30 +1,37 @@
 #include "shell.h"
 
 /**
- * main - Entry point of the simple shell program
+ * main - Entry point for simple shell
+ * @ac: Argument count (unused)
+ * @av: Argument vector
  *
- * Return: Always 0
+ * Return: 0 on success
  */
-
 int main(int ac, char **av)
 {
 	char *line = NULL;
 	size_t len = 0;
-	ssize_t read;
+	ssize_t nread;
 
 	(void)ac;
-
 	while (1)
 	{
-		write(STDOUT_FILENO, "($) ", 4);
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "($) ", 4);
 
-		if (custom_getline(&line, &len, stdin) == -1)
+		nread = custom_getline(&line, &len, stdin);
+		if (nread == -1)
+		{
+			free(line);
+			if (isatty(STDIN_FILENO))
+				write(STDOUT_FILENO, "\n", 1);
 			break;
+		}
 
 		execute_command(line, av[0]);
-		
 		free(line);
 		line = NULL;
 	}
+
 	return (0);
 }
