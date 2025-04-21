@@ -9,29 +9,28 @@
  */
 int main(int ac, char **av)
 {
-	char *line = NULL;
-	size_t len = 0;
-	ssize_t nread;
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t nread;
 
-	(void)ac;
-	while (1)
-	{
-		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "($) ", 4);
+    (void)ac;
+    while (1)
+    {
+	    
+        if (isatty(STDIN_FILENO))
+            write(STDOUT_FILENO, "($) ", 4);
 
-		nread = custom_getline(&line, &len, stdin);
-		if (nread == -1)
-		{
-			free(line);
-			if (isatty(STDIN_FILENO))
-				write(STDOUT_FILENO, "\n", 1);
-			break;
-		}
+        nread = getline(&line, &len, stdin);
+        if (nread == -1)
+        {
+            free(line);
+            if (isatty(STDIN_FILENO))
+                write(STDOUT_FILENO, "\n", 1);
+            break;
+        }
 
-		execute_command(line, av[0]);
-		free(line);
-		line = NULL;
-	}
+        execute_command(line, av[0]);
+    }
 
-	return (0);
+    return (0);
 }
