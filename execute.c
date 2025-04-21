@@ -1,4 +1,5 @@
 #include "shell.h"
+extern char **environ;
 
 /**
  * execute_command - Forks and executes the given command string
