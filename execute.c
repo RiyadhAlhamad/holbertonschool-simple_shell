@@ -12,10 +12,8 @@ void execute_command(char *cmd, char *program_name)
 	int i = 0;
 	char *token;
 
-	/* إزالة الـ newline في نهاية السطر */
 	cmd[strcspn(cmd, "\n")] = '\0';
 
-	/* تقسيم السطر حسب الفراغات أو التب */
 	token = strtok(cmd, " \t");
 	while (token && i < MAX_ARGS - 1)
 	{
@@ -24,7 +22,6 @@ void execute_command(char *cmd, char *program_name)
 	}
 	argv[i] = NULL;
 
-	/* إذا السطر كان فارغ أو مسافات فقط، نتجاهله */
 	if (argv[0] == NULL)
 		return;
 
