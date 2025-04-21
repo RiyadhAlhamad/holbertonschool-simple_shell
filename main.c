@@ -16,7 +16,7 @@ int main(void)
 			write(1, "\n", 1);
 			exit(0);
 		}
-		line[read - 1] = '\0'; // remove newline
+		line[read - 1] = '\0';
 		execute_command(line);
 	}
 	free(line);
