@@ -12,7 +12,6 @@
 ssize_t custom_getline(char **lineptr, size_t *n, FILE *stream)
 {
 	ssize_t nchars;
-	size_t bufsize = 0;
 	char *buffer;
 
 	if (lineptr == NULL || n == NULL)
