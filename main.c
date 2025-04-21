@@ -1,24 +1,37 @@
 #include "shell.h"
 
-int main(void)
+/**
+ * main - Entry point of the shell
+ * Description: Displays prompt in interactive mode, executes commands
+ * @ac: Argument count
+ * @av: Argument vector
+ * Return: 0 on success
+ */
+int main(int ac, char **av)
 {
 	char *line = NULL;
 	size_t len = 0;
-	ssize_t read;
+	ssize_t nread;
+	(void)ac;
 
 	while (1)
 	{
-		write(1, "($) ", 4);
-		read = getline(&line, &len, stdin);
-		if (read == -1)
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "($) ", 4);
+
+		nread = getline(&line, &len, stdin);
+		if (nread == -1)
 		{
 			free(line);
-			write(1, "\n", 1);
-			exit(0);
+			if (isatty(STDIN_FILENO))
+				write(STDOUT_FILENO, "\n", 1);
+			break;
 		}
-		line[read - 1] = '\0';
-		execute_command(line);
+
+		/* تنفيذ الأمر */
+		execute_command(line, av[0]);
 	}
+
 	free(line);
 	return (0);
 }
