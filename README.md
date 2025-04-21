@@ -1,1 +1,15 @@
-hi riyadh please review the repo and this what i got until now and try run the code from a.out
+# Simple Shell
+
+This is a simple UNIX shell created as part of the Holberton School curriculum.
+It can execute basic commands by invoking `/bin/` programs.
+
+## Features
+- Executes commands with arguments
+- Interactive and non-interactive modes
+- Error handling
+
+## How to use
+```bash
+$ ./hsh
+$ /bin/ls
+$ exit
