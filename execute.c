@@ -32,7 +32,7 @@ pid_t pid;
 char *argv[MAX_ARGS];
 int i = 0;
 char *token;
-char *command_path = find_command(argv[0]);
+char *command_path;
 
 cmd[strcspn(cmd, "\n")] = '\0';
 token = strtok(cmd, " \t");
@@ -44,7 +44,7 @@ token = strtok(NULL, " \t");
 argv[i] = NULL;
 if (argv[0] == NULL)
 return;
-
+command_path = find_command(argv[0]);
 if (!command_path)
 {
 write(STDERR_FILENO, program_name, strlen(program_name));
