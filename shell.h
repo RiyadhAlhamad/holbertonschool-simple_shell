@@ -19,6 +19,4 @@ extern char **environ;
 void execute_command(char *cmd, char *program_name);
 char *find_command(char *cmd);
 
-extern char **environ;
-
 #endif /* SHELL_H */
