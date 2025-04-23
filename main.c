@@ -15,7 +15,6 @@ int main(int ac, char **av)
 	int status = 0;
 
 	(void)ac;
-
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
