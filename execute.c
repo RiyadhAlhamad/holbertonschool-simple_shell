@@ -73,9 +73,14 @@ int execute_command(char *cmd, char *program_name)
 	if (!argv[0])
 		return (0);
 
-	/* direct path? */
-	if (access(argv[0], X_OK) == 0)
-		command_path = strdup(argv[0]);
+	/* if name contains '/', treat as path; else search PATH */
+	if (strchr(argv[0], '/'))
+	{
+		if (access(argv[0], X_OK) == 0)
+			command_path = strdup(argv[0]);
+		else
+			command_path = NULL;
+	}
 	else
 		command_path = find_command(argv[0]);
 
@@ -104,7 +109,7 @@ int execute_command(char *cmd, char *program_name)
 	}
 	else
 	{
-		/* Parent waits */
+		/* Parent waits and records exit status */
 		wait(&wstatus);
 		if (WIFEXITED(wstatus))
 			exit_status = WEXITSTATUS(wstatus);
