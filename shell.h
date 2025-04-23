@@ -9,6 +9,7 @@
 #include <string.h>
 
 #define MAX_ARGS 100
+extern char **environ;
 
 /**
  * execute_command - Forks and executes given cmd string with args
