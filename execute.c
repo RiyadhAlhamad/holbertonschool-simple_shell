@@ -79,9 +79,8 @@ void execute_command(char *cmd, char *program_name)
 
 	if (!command_path)
 	{
-		write(STDERR_FILENO, program_name, strlen(program_name));
-		write(STDERR_FILENO, ": 1: ", 5);
-		write(STDERR_FILENO, argv[0], strlen(argv[0]));
+		write(STDERR_FILENO, "./hsh: 1: ", 11);
+		write(STDERR_FILENO, args[0], _strlen(args[0]));
 		write(STDERR_FILENO, ": not found\n", 12);
 		exit(127);
 	}
