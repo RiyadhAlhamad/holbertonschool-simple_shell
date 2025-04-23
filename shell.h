@@ -9,14 +9,17 @@
 #include <string.h>
 
 #define MAX_ARGS 100
+
 extern char **environ;
 
 /**
  * execute_command - Forks and executes given cmd string with args
  * @cmd: Command line string (newline removed)
  * @program_name: Shell's argv[0] for error prefix
+ *
+ * Return: Exit status of the command executed
  */
-void execute_command(char *cmd, char *program_name);
+int execute_command(char *cmd, char *program_name);
 char *find_command(char *cmd);
 
 #endif /* SHELL_H */
