@@ -53,7 +53,7 @@ void execute_command(char *cmd, char *program_name)
 	char *argv[MAX_ARGS];
 	int i = 0;
 	char *token;
-	char *command_path;
+	char *command_path = NULL;
 
 	cmd[strcspn(cmd, "\n")] = '\0';
 	token = strtok(cmd, " \t");
@@ -77,15 +77,6 @@ void execute_command(char *cmd, char *program_name)
 		command_path = find_command(argv[0]);
 	}
 
-	if (!command_path)
-	{
-		write(STDERR_FILENO, program_name, strlen(program_name));
- 		write(STDERR_FILENO, ": 1: ", 5);
- 		write(STDERR_FILENO, argv[0], strlen(argv[0]));
-		write(STDERR_FILENO, ": not found\n", 12);
-		exit(127);
-	}
-
 	pid = fork();
 
 	if (pid < 0)
@@ -97,6 +88,15 @@ void execute_command(char *cmd, char *program_name)
 
 	if (pid == 0)
 	{
+		if (!command_path)
+		{
+			write(STDERR_FILENO, program_name, strlen(program_name));
+			write(STDERR_FILENO, ": 1: ", 5);
+			write(STDERR_FILENO, argv[0], strlen(argv[0]));
+			write(STDERR_FILENO, ": not found\n", 12);
+			exit(127);
+		}
+
 		execve(command_path, argv, environ);
 		perror("execve");
 		free(command_path);
