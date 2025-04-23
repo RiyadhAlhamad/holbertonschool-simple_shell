@@ -44,17 +44,19 @@ char *find_command(char *cmd)
 
 /**
  * execute_command - Forks and executes a given command string with arguments
- * @cmd: Command line string (may include arguments separated by spaces or tabs)
+ * @cmd: Command line string (may include args separated by spaces or tabs)
  * @program_name: Shell program name (argv[0]) for error messages
+ *
+ * Return: Exit status of executed command
  */
-void execute_command(char *cmd, char *program_name)
+int execute_command(char *cmd, char *program_name)
 {
 	pid_t pid;
 	char *argv[MAX_ARGS];
-	int i = 0;
+	int i = 0, wstatus;
 	char *token;
 	char *command_path = NULL;
-	int wstatus;
+	int exit_status = 0;
 
 	/* strip newline */
 	cmd[strcspn(cmd, "\n")] = '\0';
@@ -69,7 +71,7 @@ void execute_command(char *cmd, char *program_name)
 	argv[i] = NULL;
 
 	if (!argv[0])
-		return;
+		return (0);
 
 	/* direct path? */
 	if (access(argv[0], X_OK) == 0)
@@ -82,7 +84,7 @@ void execute_command(char *cmd, char *program_name)
 	{
 		perror("fork");
 		free(command_path);
-		return;
+		return (127);
 	}
 	else if (pid == 0)
 	{
@@ -102,11 +104,12 @@ void execute_command(char *cmd, char *program_name)
 	}
 	else
 	{
-		/* Parent: wait and propagate exit code */
+		/* Parent waits */
 		wait(&wstatus);
-		if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) != 0)
-			exit(WEXITSTATUS(wstatus));
+		if (WIFEXITED(wstatus))
+			exit_status = WEXITSTATUS(wstatus);
 	}
 
 	free(command_path);
+	return (exit_status);
 }
