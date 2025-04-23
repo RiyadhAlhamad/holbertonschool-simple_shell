@@ -8,7 +8,7 @@
 #include <sys/wait.h>
 #include <string.h>
 
-#define MAX_ARGS 64
+#define MAX_ARGS 100
 
 /**
  * execute_command - Forks and executes given cmd string with args
@@ -16,6 +16,7 @@
  * @program_name: Shell's argv[0] for error prefix
  */
 void execute_command(char *cmd, char *program_name);
+char *find_command(char *cmd);
 
 extern char **environ;
 
