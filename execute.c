@@ -27,7 +27,7 @@ char *find_command(char *cmd)
 		return (NULL);
 
 	token = strtok(path, ":");
-	while (token != NULL)
+	while (token)
 	{
 		snprintf(full_path, sizeof(full_path), "%s/%s", token, cmd);
 		if (access(full_path, X_OK) == 0)
@@ -54,10 +54,13 @@ void execute_command(char *cmd, char *program_name)
 	int i = 0;
 	char *token;
 	char *command_path = NULL;
+	int wstatus;
 
+	/* strip newline */
 	cmd[strcspn(cmd, "\n")] = '\0';
-	token = strtok(cmd, " \t");
 
+	/* split into argv */
+	token = strtok(cmd, " \t");
 	while (token && i < MAX_ARGS - 1)
 	{
 		argv[i++] = token;
@@ -65,9 +68,10 @@ void execute_command(char *cmd, char *program_name)
 	}
 	argv[i] = NULL;
 
-	if (argv[0] == NULL)
+	if (!argv[0])
 		return;
 
+	/* direct path? */
 	if (access(argv[0], X_OK) == 0)
 		command_path = strdup(argv[0]);
 	else
@@ -82,7 +86,7 @@ void execute_command(char *cmd, char *program_name)
 	}
 	else if (pid == 0)
 	{
-		/* Child process */
+		/* Child */
 		if (!command_path)
 		{
 			write(STDERR_FILENO, program_name, strlen(program_name));
@@ -91,7 +95,6 @@ void execute_command(char *cmd, char *program_name)
 			write(STDERR_FILENO, ": not found\n", 12);
 			exit(127);
 		}
-
 		execve(command_path, argv, environ);
 		perror("execve");
 		free(command_path);
@@ -99,8 +102,10 @@ void execute_command(char *cmd, char *program_name)
 	}
 	else
 	{
-		/* Parent process */
-		wait(NULL);
+		/* Parent: wait and propagate exit code */
+		wait(&wstatus);
+		if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) != 0)
+			exit(WEXITSTATUS(wstatus));
 	}
 
 	free(command_path);
