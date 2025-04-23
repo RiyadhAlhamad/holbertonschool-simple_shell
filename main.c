@@ -5,15 +5,17 @@
  * @ac: Argument count (unused)
  * @av: Argument vector
  *
- * Return: 0 on success
+ * Return: Exit status of last command in non-interactive mode, 0 otherwise
  */
 int main(int ac, char **av)
 {
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
+	int status = 0;
 
 	(void)ac;
+
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -28,10 +30,10 @@ int main(int ac, char **av)
 			break;
 		}
 
-		execute_command(line, av[0]);
+		status = execute_command(line, av[0]);
 		free(line);
 		line = NULL;
 	}
 
-	return (0);
+	return (status);
 }
