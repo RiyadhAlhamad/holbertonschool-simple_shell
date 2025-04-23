@@ -113,6 +113,10 @@ int execute_command(char *cmd, char *program_name)
 		wait(&wstatus);
 		if (WIFEXITED(wstatus))
 			exit_status = WEXITSTATUS(wstatus);
+
+		/* if non-interactive (e.g. via script), exit shell now */
+		if (!isatty(STDIN_FILENO))
+			exit(exit_status);
 	}
 
 	free(command_path);
