@@ -3,7 +3,7 @@
 char *find_command(char *cmd)
 {
 
-char *path = env("PATH");
+char *path = (char) env("PATH");
 char *token = strtok(path, ":");
 char full_path[1024];
 
