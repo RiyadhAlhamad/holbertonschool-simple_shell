@@ -27,12 +27,12 @@ return (NULL);
  * @program_name: Shell's argv[0] for error messages
  */
 void execute_command(char *cmd, char *program_name)
-{
-char *command_path = find_command(argv[0]);  
+{  
 pid_t pid;
 char *argv[MAX_ARGS];
 int i = 0;
 char *token;
+char *command_path = find_command(argv[0]);
 
 cmd[strcspn(cmd, "\n")] = '\0';
 token = strtok(cmd, " \t");
