@@ -7,56 +7,47 @@
  */
 char *find_in_path(char *command)
 {
-    char *path = NULL;
-    char *path_copy = NULL;
-    char *dir = NULL;
-    char *full_path = NULL;
-    int found = 0;
+	char *path = NULL, *path_copy = NULL, *dir = NULL, *full_path = NULL;
+	int found = 0;
+	char **env; /* تعريف خارج الحلقة للتواكب مع C89 */
 
-    /* Manual search for PATH in environ */
-    for (char **env = environ; *env != NULL; env++)
-    {
-        if (strncmp(*env, "PATH=", 5) == 0)
-        {
-            path = *env + 5;
-            break;
-        }
-    }
+	for (env = environ; *env != NULL; env++) {
+		if (strncmp(*env, "PATH=", 5) == 0) {
+			path = *env + 5;
+			break;
+		}
+	}
 
-    if (!path)
-        return (NULL);
+	if (!path)
+		return (NULL);
 
-    path_copy = strdup(path);
-    if (!path_copy)
-        return (NULL);
+	path_copy = strdup(path);
+	if (!path_copy)
+		return (NULL);
 
-    dir = strtok(path_copy, ":");
-    while (dir != NULL)
-    {
-        int dir_len = strlen(dir);
-        int cmd_len = strlen(command);
+	dir = strtok(path_copy, ":");
+	while (dir) {
+		int dir_len = strlen(dir);
+		int cmd_len = strlen(command);
 
-        full_path = malloc(dir_len + cmd_len + 2);
-        if (!full_path)
-        {
-            free(path_copy);
-            return (NULL);
-        }
+		full_path = malloc(dir_len + cmd_len + 2);
+		if (!full_path) {
+			free(path_copy);
+			return (NULL);
+		}
 
-        snprintf(full_path, dir_len + cmd_len + 2, "%s/%s", dir, command);
+		snprintf(full_path, dir_len + cmd_len + 2, "%s/%s", dir, command);
 
-        if (access(full_path, X_OK) == 0)
-        {
-            found = 1;
-            break;
-        }
+		if (access(full_path, X_OK) == 0) {
+			found = 1;
+			break;
+		}
 
-        free(full_path);
-        full_path = NULL;
-        dir = strtok(NULL, ":");
-    }
+		free(full_path);
+		full_path = NULL;
+		dir = strtok(NULL, ":");
+	}
 
-    free(path_copy);
-
-    return (found ? full_path : NULL);
+	free(path_copy);
+	return (found ? full_path : NULL);
 }
