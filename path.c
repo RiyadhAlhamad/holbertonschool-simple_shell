@@ -1,15 +1,15 @@
 #include "shell.h"
 
 /**
- * find_in_path - Searches for command in PATH environment variable
- * @command: Command to search for
- * Return: Full path if found, NULL otherwise
+ * find_in_path - Searches for command in PATH
+ * @command: Command to search
+ * Return: Full path or NULL
  */
 char *find_in_path(char *command)
 {
 	char *path = NULL, *path_copy = NULL, *dir = NULL, *full_path = NULL;
 	int found = 0;
-	char **env; /* تعريف خارج الحلقة للتواكب مع C89 */
+	char **env;
 
 	for (env = environ; *env != NULL; env++) {
 		if (strncmp(*env, "PATH=", 5) == 0) {
@@ -18,8 +18,9 @@ char *find_in_path(char *command)
 		}
 	}
 
-	if (!path)
+	if (path == NULL || strlen(path) == 0) {
 		return (NULL);
+	}
 
 	path_copy = strdup(path);
 	if (!path_copy)
