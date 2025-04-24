@@ -7,7 +7,6 @@ It can execute basic commands by invoking `/bin/` programs.
 - Executes commands with arguments
 - Interactive and non-interactive modes
 - Error handling
-- 
 
 ## How to use
 ```bash
