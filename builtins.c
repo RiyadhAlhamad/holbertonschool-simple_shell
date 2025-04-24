@@ -12,10 +12,11 @@ int is_builtin(char *command)
 
 /**
  * handle_builtin - Handles built-in commands
- * @args: Array of command arguments
+ * @args: Command arguments
+ * @status: Pointer to store exit status
  * Return: 1 for exit command, 0 otherwise
  */
-int handle_builtin(char **args)
+int handle_builtin(char **args, int *status)
 {
 	if (strcmp(args[0], "exit") == 0)
 	{
@@ -24,6 +25,7 @@ int handle_builtin(char **args)
 	else if (strcmp(args[0], "env") == 0)
 	{
 		print_env();
+		*status = 0;
 	}
 	return (0);
 }
