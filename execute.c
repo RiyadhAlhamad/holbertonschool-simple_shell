@@ -3,8 +3,9 @@
 /**
  * execute_command - Executes a command with arguments
  * @args: Array of command arguments
+ * @program_name: Name of the shell program
  */
-void execute_command(char **args)
+void execute_command(char **args, char *program_name)
 {
     char *full_path = NULL;
     pid_t pid;
@@ -20,7 +21,7 @@ void execute_command(char **args)
 
     if (!full_path)
     {
-        fprintf(stderr, "%s: command not found\n", args[0]);
+        fprintf(stderr, "%s: 1: %s: not found\n", program_name, args[0]);
         return;
     }
 
@@ -40,4 +41,7 @@ void execute_command(char **args)
     {
         wait(NULL);
     }
+
+    if (full_path != args[0])
+        free(full_path);
 }
