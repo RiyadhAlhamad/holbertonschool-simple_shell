@@ -6,7 +6,6 @@ int is_builtin(char *command) {
 
 void handle_builtin(char **args) {
     if (strcmp(args[0], "exit") == 0) {
-        free(args);
         exit(EXIT_SUCCESS);
     } else if (strcmp(args[0], "env") == 0) {
         print_env();
