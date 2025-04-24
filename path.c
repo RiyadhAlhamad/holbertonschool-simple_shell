@@ -3,15 +3,26 @@
 /**
  * find_in_path - Searches for command in PATH environment variable
  * @command: Command to search for
- * 
  * Return: Full path if found, NULL otherwise
  */
 char *find_in_path(char *command)
 {
-    char *path, *path_copy, *dir, *full_path;
-    int cmd_len, dir_len;
+    char *path = NULL;
+    char *path_copy = NULL;
+    char *dir = NULL;
+    char *full_path = NULL;
+    int found = 0;
 
-    path = getenv("PATH");
+    /* Manual search for PATH in environ */
+    for (char **env = environ; *env != NULL; env++)
+    {
+        if (strncmp(*env, "PATH=", 5) == 0)
+        {
+            path = *env + 5;
+            break;
+        }
+    }
+
     if (!path)
         return (NULL);
 
@@ -19,20 +30,26 @@ char *find_in_path(char *command)
     if (!path_copy)
         return (NULL);
 
-    cmd_len = strlen(command);
     dir = strtok(path_copy, ":");
-    full_path = NULL;
-
-    while (dir)
+    while (dir != NULL)
     {
-        dir_len = strlen(dir);
+        int dir_len = strlen(dir);
+        int cmd_len = strlen(command);
+
         full_path = malloc(dir_len + cmd_len + 2);
         if (!full_path)
-            break;
+        {
+            free(path_copy);
+            return (NULL);
+        }
 
         snprintf(full_path, dir_len + cmd_len + 2, "%s/%s", dir, command);
+
         if (access(full_path, X_OK) == 0)
+        {
+            found = 1;
             break;
+        }
 
         free(full_path);
         full_path = NULL;
@@ -40,5 +57,6 @@ char *find_in_path(char *command)
     }
 
     free(path_copy);
-    return (full_path);
+
+    return (found ? full_path : NULL);
 }
