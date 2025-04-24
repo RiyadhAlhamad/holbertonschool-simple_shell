@@ -18,6 +18,6 @@ char **parse_input(char *line);
 char *find_in_path(char *command);
 int execute_command(char **args, char *program_name);
 int is_builtin(char *command);
-void handle_builtin(char **args);
+int handle_builtin(char **args);
 
 #endif /* SHELL_H */
