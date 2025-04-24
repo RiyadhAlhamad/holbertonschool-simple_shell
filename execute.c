@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * execute_command - Executes a command with arguments
+ * execute_command - Executes external commands
  * @args: Command arguments
  * @program_name: Shell program name
  * Return: Exit status of executed command
@@ -12,14 +12,10 @@ int execute_command(char **args, char *program_name)
 	pid_t pid;
 	int exit_status = 0;
 
-	if (strchr(args[0], '/') != NULL)
-	{
+	if (strchr(args[0], '/'))
 		full_path = args[0];
-	}
 	else
-	{
 		full_path = find_in_path(args[0]);
-	}
 
 	if (!full_path)
 	{
