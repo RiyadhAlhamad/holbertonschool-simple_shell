@@ -1,16 +1,19 @@
 #include "shell.h"
 
 /**
- * main - Entry point of the shell program
- * 
- * Return: Always 0 (success)
+ * main - Entry point of the simple shell program
+ * @argc: Number of arguments
+ * @argv: Array of arguments
+ * Return: Exit status
  */
-int main(void)
+int main(int argc, char **argv)
 {
     char *line = NULL;
     size_t len = 0;
     ssize_t read;
     char **args;
+
+    (void)argc;
 
     while (1)
     {
@@ -35,7 +38,7 @@ int main(void)
             if (is_builtin(args[0]))
                 handle_builtin(args);
             else
-                execute_command(args);
+                execute_command(args, argv[0]);
         }
         free(args);
     }
