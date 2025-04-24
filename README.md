@@ -23,17 +23,6 @@ This shell includes the following capabilities:
 
 ## Getting Started
 
-File	Description
-shell.c	Main loop for the shell
-exec.c	Handles command execution with execve
-fork.c	Forks the process
-prompt.c	Displays the prompt
-stat.c	Handles command validation
-wait.c	Handles process waiting
-env-main.c, printenv.c	Prints environment
-
-
-
 ### Compilation
 Use the following command to compile:
 
@@ -45,4 +34,15 @@ $ ls -l
 $ /bin/ls
 $ env
 $ exit
+
+## Project Structure
+| File        | Description                         |
+|-------------|-------------------------------------|
+| `shell.c`   | Main loop for the shell             |
+| `exec.c`    | Handles command execution with `execve` |
+| `fork.c`    | Forks the process                   |
+| `prompt.c`  | Displays the prompt                 |
+| `stat.c`    | Handles command validation          |
+| `wait.c`    | Handles process waiting             |
+| `env-main.c`, `printenv.c` | Prints environment   |
 
