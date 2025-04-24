@@ -28,6 +28,8 @@ int execute_command(char **args, char *program_name)
 	{
 		execve(full_path, args, environ);
 		perror("execve");
+		/* Free if execve fails */
+		free(full_path);
 		_exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)
