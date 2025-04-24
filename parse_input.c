@@ -1,9 +1,9 @@
 #include "shell.h"
 
 /**
- * parse_input - Parses input line into arguments
- * @line: Input line
- * Return: Null-terminated array of arguments
+ * parse_input - Splits input line into arguments
+ * @line: Input line to parse
+ * Return: NULL-terminated array of arguments
  */
 char **parse_input(char *line)
 {
@@ -18,7 +18,7 @@ char **parse_input(char *line)
 	}
 
 	token = strtok(line, " ");
-	while (token != NULL && i < MAX_ARGS - 1)
+	while (token && i < MAX_ARGS - 1)
 	{
 		args[i++] = token;
 		token = strtok(NULL, " ");
