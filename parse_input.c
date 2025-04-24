@@ -1,9 +1,9 @@
 #include "shell.h"
 
 /**
- * parse_input - Splits input string into command arguments
- * @line: Input string to parse
- * Return: NULL-terminated array of arguments
+ * parse_input - Parses input line into arguments
+ * @line: Input line
+ * Return: Null-terminated array of arguments
  */
 char **parse_input(char *line)
 {
