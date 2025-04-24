@@ -8,55 +8,52 @@
  */
 int main(int argc, char **argv)
 {
-	char *line = NULL;
-	size_t len = 0;
-	ssize_t read;
-	char **args = NULL;
-	int status = 0;
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    char **args = NULL;
+    int status = 0;
 
-	(void)argc;
+    (void)argc;
 
-	while (1)
-	{
-		if (isatty(STDIN_FILENO))
-			printf("$ ");
+    while (1)
+    {
+        if (isatty(STDIN_FILENO))
+            printf("$ ");
 
-		read = getline(&line, &len, stdin);
-		if (read == -1)
-			break;
+        read = getline(&line, &len, stdin);
+        if (read == -1)
+            break;
 
-		line[strcspn(line, "\n")] = '\0';
-		args = parse_input(line);
+        line[strcspn(line, "\n")] = '\0';
+        args = parse_input(line);
 
-		if (args[0])
-		{
-			if (is_builtin(args[0]))
-			{
-				if (handle_builtin(args, status))
-				{
-					free(args);
-					free(line);
-					exit(exit_code);
-				}
-				/* Free built-in command args */
-				free(args);
-			}
-			else
-			{
-				status = execute_command(args, argv[0]);
-				/* Free external command args */
-				free(args);
-			}
-		}
-		else
-		{
-			/* Free empty input */
-			free(args);
-		}
-		/* Prevent dangling pointer */
-		args = NULL;
-	}
+        if (args[0])
+        {
+            if (is_builtin(args[0]))
+            {
+                int exit_code = handle_builtin(args, status);
+                if (exit_code)
+                {
+                    free(args);
+                    free(line);
+                    exit(exit_code);
+                }
+                free(args);
+            }
+            else
+            {
+                status = execute_command(args, argv[0]);
+                free(args);
+            }
+        }
+        else
+        {
+            free(args);
+        }
+        args = NULL;
+    }
 
-	free(line);
-	return (status);
+    free(line);
+    return (status);
 }
