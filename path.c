@@ -3,7 +3,7 @@
 /**
  * find_in_path - Finds command in PATH
  * @command: Command to search
- * Return: Full path or NULL
+ * Return: Full path if found, NULL otherwise
  */
 char *find_in_path(char *command)
 {
@@ -20,7 +20,7 @@ char *find_in_path(char *command)
 		}
 	}
 
-	if (path == NULL || strlen(path) == 0)
+	if (!path || strlen(path) == 0)
 		return (NULL);
 
 	path_copy = strdup(path);
