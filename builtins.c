@@ -3,7 +3,6 @@
 /**
  * is_builtin - Checks if command is a built-in
  * @command: Command to check
- * 
  * Return: 1 if built-in, 0 otherwise
  */
 int is_builtin(char *command)
@@ -23,20 +22,11 @@ void handle_builtin(char **args)
     }
     else if (strcmp(args[0], "env") == 0)
     {
-        print_env();
-    }
-}
-
-/**
- * print_env - Prints environment variables
- */
-void print_env(void)
-{
-    char **env = environ;
-
-    while (*env)
-    {
-        printf("%s\n", *env);
-        env++;
+        char **env = environ;
+        while (*env)
+        {
+            printf("%s\n", *env);
+            env++;
+        }
     }
 }
