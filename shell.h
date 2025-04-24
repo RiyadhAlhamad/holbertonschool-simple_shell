@@ -19,5 +19,6 @@ char *find_in_path(char *command);
 int execute_command(char **args, char *program_name);
 int is_builtin(char *command);
 int handle_builtin(char **args);
+void print_env(void);
 
 #endif /* SHELL_H */
