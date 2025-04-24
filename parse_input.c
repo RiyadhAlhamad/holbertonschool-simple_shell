@@ -9,7 +9,7 @@ char **parse_input(char *line) {
         args[i++] = token;
         token = strtok(NULL, " ");
     }
-    args[i] = NULL; // نهاية المصفوفة بـ NULL لـ execve
+    args[i] = NULL;
 
     return args;
 }
