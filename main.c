@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 		if (args[0] != NULL)
 		{
 			if (is_builtin(args[0]))
-				exit_flag = handle_builtin(args);
+				exit_flag = handle_builtin(args, &status);
 			else
 				status = execute_command(args, argv[0]);
 		}
@@ -45,5 +45,5 @@ int main(int argc, char **argv)
 	}
 
 	free(line);
-	return (exit_flag ? 0 : status);
+	return (status);
 }
