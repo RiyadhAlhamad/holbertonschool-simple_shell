@@ -24,15 +24,19 @@ This shell includes the following capabilities:
 ## Getting Started
 
 ## Project Structure
-| File        | Description                         |
-|-------------|-------------------------------------|
-| `shell.c`   | Main loop for the shell             |
-| `exec.c`    | Handles command execution with `execve` |
-| `fork.c`    | Forks the process                   |
-| `prompt.c`  | Displays the prompt                 |
-| `stat.c`    | Handles command validation          |
-| `wait.c`    | Handles process waiting             |
-| `env-main.c`, `printenv.c` | Prints environment   |
+
+| File                 | Description                                      |
+|----------------------|--------------------------------------------------|
+| `main.c`             | Entry point of the shell, contains main loop     |
+| `builtins.c`         | Implements built-in commands like `exit`, `env`  |
+| `execute.c`          | Handles command execution using `fork` and `execve` |
+| `parse_input.c`      | Tokenizes and parses user input                  |
+| `path.c`             | Resolves the full path of commands               |
+| `shell.h`            | Header file with function prototypes and macros  |
+| `man_1_simple_shell` | Manual page for the shell (man page)             |
+| `README.md`          | Project documentation                            |
+| `AUTHORS`            | List of project contributors                     |
+
 
 
 ### Compilation
