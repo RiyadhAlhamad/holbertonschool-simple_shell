@@ -21,7 +21,7 @@ int main(void) {
         if (strlen(line) == 0)
             continue;
 
-        **args = parse_input(line);
+        args = parse_input(line);
         if (args[0] != NULL) {
             if (is_builtin(args[0])) {
                 handle_builtin(args);
