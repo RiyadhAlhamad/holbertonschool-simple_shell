@@ -3,23 +3,21 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
 
-#define MAX_ARGS 100
+/* Macros */
+#define MAX_ARGS 64
+#define BUFFER_SIZE 1024
 
-extern char **environ;
-
-/**
- * execute_command - Forks and executes given cmd string with args
- * @cmd: Command line string (newline removed)
- * @program_name: Shell's argv[0] for error prefix
- *
- * Return: Exit status of the command executed
- */
-int execute_command(char *cmd, char *program_name);
-char *find_command(char *cmd);
+/* Function Prototypes */
+char **parse_input(char *line);
+char *find_in_path(char *command);
+void execute_command(char **args);
+int is_builtin(char *command);
+void handle_exit(void);
+void print_env(void);
 
 #endif /* SHELL_H */
