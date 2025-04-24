@@ -16,7 +16,7 @@ extern char **environ;
 /* Function prototypes */
 char **parse_input(char *line);
 char *find_in_path(char *command);
-void execute_command(char **args, char *program_name);
+int execute_command(char **args, char *program_name);
 int is_builtin(char *command);
 void handle_builtin(char **args);
 
