@@ -19,5 +19,6 @@ void execute_command(char **args);
 int is_builtin(char *command);
 void handle_exit(void);
 void print_env(void);
+void handle_builtin(char **args);
 
 #endif /* SHELL_H */
