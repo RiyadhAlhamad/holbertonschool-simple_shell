@@ -4,6 +4,7 @@ int main(void) {
     char *line = NULL;
     size_t len = 0;
     ssize_t read;
+    char **args;
 
     while (1) {
         if (isatty(STDIN_FILENO))
@@ -20,7 +21,7 @@ int main(void) {
         if (strlen(line) == 0)
             continue;
 
-        char **args = parse_input(line);
+        **args = parse_input(line);
         if (args[0] != NULL) {
             if (is_builtin(args[0])) {
                 handle_builtin(args);
