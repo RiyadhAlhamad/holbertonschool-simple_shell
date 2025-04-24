@@ -2,15 +2,15 @@
 
 /**
  * execute_command - Executes a command with arguments
- * @args: Array of command arguments
- * @program_name: Name of the shell program
- * Return: Exit status code
+ * @args: Command arguments
+ * @program_name: Shell program name
+ * Return: Exit status of executed command
  */
 int execute_command(char **args, char *program_name)
 {
 	char *full_path = NULL;
 	pid_t pid;
-	int status = 0, exit_status = 0;
+	int exit_status = 0;
 
 	if (strchr(args[0], '/') != NULL)
 	{
@@ -28,22 +28,17 @@ int execute_command(char **args, char *program_name)
 	}
 
 	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
+	if (pid == 0)
 	{
 		execve(full_path, args, environ);
 		perror("execve");
 		_exit(EXIT_FAILURE);
 	}
-	else
+	else if (pid > 0)
 	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			exit_status = WEXITSTATUS(status);
+		waitpid(pid, &exit_status, 0);
+		if (WIFEXITED(exit_status))
+			exit_status = WEXITSTATUS(exit_status);
 	}
 
 	if (full_path != args[0])
