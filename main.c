@@ -38,18 +38,22 @@ int main(int argc, char **argv)
 					free(line);
 					exit(status);
 				}
+				/* Free built-in command args */
 				free(args);
 			}
 			else
 			{
 				status = execute_command(args, argv[0]);
+				/* Free external command args */
 				free(args);
 			}
 		}
 		else
 		{
+			/* Free empty input */
 			free(args);
 		}
+		/* Prevent dangling pointer */
 		args = NULL;
 	}
 
