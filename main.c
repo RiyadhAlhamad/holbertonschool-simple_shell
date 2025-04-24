@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 				{
 					free(args);
 					free(line);
-					exit(status);
+					exit(exit_code);
 				}
 				/* Free built-in command args */
 				free(args);
