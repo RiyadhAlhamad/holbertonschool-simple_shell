@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
- * main - Entry point of the shell program
+ * main - Entry point of the simple shell
  * @argc: Argument count
  * @argv: Argument vector
- * Return: Exit status
+ * Return: Exit status of last command
  */
 int main(int argc, char **argv)
 {
@@ -12,34 +12,33 @@ int main(int argc, char **argv)
 	size_t len = 0;
 	ssize_t read;
 	char **args;
-	int status = 0, exit_flag = 0;
+	int status = 0;
 
 	(void)argc;
 
-	while (!exit_flag)
+	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			printf("$ ");
 
 		read = getline(&line, &len, stdin);
 		if (read == -1)
-		{
-			if (isatty(STDIN_FILENO))
-				printf("\n");
 			break;
-		}
 
 		line[strcspn(line, "\n")] = '\0';
-		if (strlen(line) == 0)
-			continue;
-
 		args = parse_input(line);
-		if (args[0] != NULL)
+
+		if (args[0])
 		{
 			if (is_builtin(args[0]))
-				exit_flag = handle_builtin(args, status);
+			{
+				handle_builtin(args, status);
+				break;
+			}
 			else
+			{
 				status = execute_command(args, argv[0]);
+			}
 		}
 		free(args);
 	}
