@@ -74,8 +74,14 @@ int execute_command(char *cmd, char *program_name)
 		return (0);
 
 	if (strcmp(argv[0], "exit") == 0)
+	  {
+	    if (argv[1] != NULL)
+	      {
+		write(STDERR_FILENO, "exit: too many arguments\n", 25);
+		return (1);
+	      }
 	  exit(0);
-
+	  }
 	/* if name contains '/', treat as path; else search PATH */
 	if (strchr(argv[0], '/'))
 	{
