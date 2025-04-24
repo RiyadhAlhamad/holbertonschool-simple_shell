@@ -15,7 +15,8 @@ void handle_builtin(char **args) {
 
 void print_env(void) {
     extern char **environ;
-    for (char **env = environ; *env; env++) {
+    char **env;
+    for (env = environ; *env; env++) {
         printf("%s\n", *env);
     }
 }
