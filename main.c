@@ -30,6 +30,11 @@ int main(int ac, char **av)
 		}
 
 		status = execute_command(line, av[0]);
+		if (status == -1)
+		  {
+		    free(line);
+		    break;
+		  }
 		free(line);
 		line = NULL;
 	}

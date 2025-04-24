@@ -73,6 +73,9 @@ int execute_command(char *cmd, char *program_name)
 	if (!argv[0])
 		return (0);
 
+	if (strcmp(argv[0], "exit") == 0)
+	  return (-1);
+
 	/* if name contains '/', treat as path; else search PATH */
 	if (strchr(argv[0], '/'))
 	{
