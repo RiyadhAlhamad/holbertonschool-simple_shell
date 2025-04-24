@@ -1,38 +1,36 @@
 #include "shell.h"
 
-/**
- * main - Entry point for simple shell
- * @ac: Argument count (unused)
- * @av: Argument vector
- *
- * Return: Exit status of last command in non-interactive mode, 0 otherwise
- */
-int main(int ac, char **av)
-{
-	char *line = NULL;
-	size_t len = 0;
-	ssize_t nread;
-	int status = 0;
+int main(void) {
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
 
-	(void)ac;
-	while (1)
-	{
-		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "($) ", 4);
+    while (1) {
+        if (isatty(STDIN_FILENO))
+            printf("$ ");
 
-		nread = getline(&line, &len, stdin);
-		if (nread == -1)
-		{
-			free(line);
-			if (isatty(STDIN_FILENO))
-				write(STDOUT_FILENO, "\n", 1);
-			break;
-		}
+        read = getline(&line, &len, stdin);
+        if (read == -1) {
+            if (isatty(STDIN_FILENO))
+                printf("\n");
+            break;
+        }
 
-		status = execute_command(line, av[0]);
-		free(line);
-		line = NULL;
-	}
+        line[strcspn(line, "\n")] = '\0';
+        if (strlen(line) == 0)
+            continue;
 
-	return (status);
+        char **args = parse_input(line);
+        if (args[0] != NULL) {
+            if (is_builtin(args[0])) {
+                handle_builtin(args);
+            } else {
+                execute_command(args);
+            }
+        }
+        free(args);
+    }
+
+    free(line);
+    return 0;
 }
