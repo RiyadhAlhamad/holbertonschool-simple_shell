@@ -14,14 +14,18 @@ int is_builtin(char *command)
  * handle_builtin - Handles built-in commands
  * @args: Command arguments
  * @last_status: Last command's exit status
- * Return: 1 if exit command, 0 otherwise
+ * Return: Exit status if exit command, 0 otherwise
  */
 int handle_builtin(char **args, int last_status)
 {
 	if (strcmp(args[0], "exit") == 0)
-		return (1);
+	{
+		return (last_status);
+	}
 	else if (strcmp(args[0], "env") == 0)
+	{
 		print_env();
+	}
 	return (0);
 }
 
