@@ -13,6 +13,8 @@ char **parse_input(char *line)
 
 	if (!args)
 	{
+		/* Free input line on malloc failure */
+		free(line);
 		perror("malloc");
 		exit(EXIT_FAILURE);
 	}
