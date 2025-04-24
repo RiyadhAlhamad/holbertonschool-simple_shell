@@ -11,22 +11,20 @@ int is_builtin(char *command)
 }
 
 /**
- * handle_builtin - Executes built-in commands
+ * handle_builtin - Handles built-in commands
  * @args: Array of command arguments
+ * Return: 1 if exit command, 0 otherwise
  */
-void handle_builtin(char **args)
+int handle_builtin(char **args)
 {
     if (strcmp(args[0], "exit") == 0)
     {
-        exit(EXIT_SUCCESS);
+        return (1);
     }
     else if (strcmp(args[0], "env") == 0)
     {
-        char **env = environ;
-        while (*env)
-        {
-            printf("%s\n", *env);
-            env++;
-        }
+        print_env();
     }
+    return (0);
+}
 }
