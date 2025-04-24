@@ -32,11 +32,16 @@ int main(int argc, char **argv)
         {
             if (is_builtin(args[0]))
             {
-                free(line);
+                int should_exit = handle_builtin(args, status);
                 free(args);
-                handle_builtin(args, status);
+                free(line);
+                if (should_exit)
+                    exit(status);
             }
-            status = execute_command(args, argv[0]);
+            else
+            {
+                status = execute_command(args, argv[0]);
+            }
         }
         free(args);
         args = NULL;
