@@ -8,17 +8,17 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
-/* Macros */
 #define MAX_ARGS 64
 #define BUFFER_SIZE 1024
 
-/* Function Prototypes */
+extern char **environ;
+
+/* Function prototypes */
 char **parse_input(char *line);
 char *find_in_path(char *command);
 void execute_command(char **args);
 int is_builtin(char *command);
-void handle_exit(void);
-void print_env(void);
 void handle_builtin(char **args);
+void print_env(void);
 
 #endif /* SHELL_H */
