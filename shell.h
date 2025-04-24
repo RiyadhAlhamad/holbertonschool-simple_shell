@@ -16,9 +16,8 @@ extern char **environ;
 /* Function prototypes */
 char **parse_input(char *line);
 char *find_in_path(char *command);
-void execute_command(char **args);
+void execute_command(char **args, char *program_name);
 int is_builtin(char *command);
 void handle_builtin(char **args);
-void print_env(void);
 
 #endif /* SHELL_H */
